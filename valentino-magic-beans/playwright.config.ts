@@ -26,27 +26,10 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testIgnore: /auth/,
       use: { 
         ...devices['Desktop Chrome'],
        },
     },
-    // project for files with auth
-    {
-      name: 'auth-files',
-      // match for file with auth:
-      testMatch: /auth/,
-      use: {
-        ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json'
-      },
-      dependencies: ['auth-setup']
-    },
-
-    {
-      name: 'auth-setup',
-      testMatch: 'auth.setup.ts',
-    }
 
     // {
     //   name: 'firefox',

@@ -28,8 +28,13 @@ export default defineConfig({
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json'
        },
     },
+    {
+      name: 'auth-setup',
+      testMatch: 'auth.setup.ts'
+    }
 
     // {
     //   name: 'firefox',

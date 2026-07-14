@@ -1,5 +1,5 @@
 import { join, resolve } from 'path'
-import { writeFileSync, existsSync, mkdirSync } from 'fs'
+import { writeFileSync, existsSync, mkdirSync, readFileSync } from 'fs'
 
 type LoginData = {
     email: string;
@@ -12,6 +12,10 @@ function getAuthDir(): string {
 
 function getLoginDataPath(): string {
     return join(getAuthDir(), 'loginData.json');
+}
+
+export function getAuthSessionPath(): string {
+    return join(getAuthDir(), 'user.json');
 }
 
 export function loginDataFileExists(): boolean {
@@ -27,5 +31,12 @@ export function writeLoginData(loginData: LoginData): void {
         getLoginDataPath(),
         JSON.stringify(loginData, null, 2)
     );
+}
+
+export function readLoginData(){
+    if (loginDataFileExists()) {
+        return JSON.parse(readFileSync(getLoginDataPath(), 'utf-8')) as LoginData;
+    }
+    return undefined
 }
 

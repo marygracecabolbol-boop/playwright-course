@@ -2,8 +2,10 @@ import { test, expect } from '@playwright/test';
 import { EmailUtils } from './utils/EmailUtils';
 import * as signUpPage from './pages/SignUp'
 import * as loginPage from './pages/Login'
+import { writeLoginData, loginDataFileExists } from './utils/AuthFileUtils'
 
 test('Sign up', async({page})=> {
+    test.skip(loginDataFileExists(), 'credentials present')
 
     const emailUtils = new EmailUtils();
     const inbox = await emailUtils.createInbox()
@@ -23,6 +25,11 @@ test('Sign up', async({page})=> {
 
     // After successful login, user should be redirected to home page
     await expect(page).toHaveURL('/')
+
+    writeLoginData({
+        email: inbox.emailAddress,
+        pass: signUpPage.signUpData.pass
+    })
 
 
 

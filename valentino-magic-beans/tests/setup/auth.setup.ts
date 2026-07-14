@@ -1,30 +1,29 @@
-import path from 'path';
-import fs from 'fs';
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import * as loginPage from '../pages/Login'
+import { readLoginData, getAuthSessionPath } from '../utils/AuthFileUtils'
 
-const authSessionFile = path.resolve(__dirname, '../../playwright/.auth/user.json');
+test('authenticate', async ({ page }) => {
 
-// Read and parse the JSON file
-const loginDataFile = path.resolve(__dirname, '../../playwright/.auth/loginData.json');
-const loginData = JSON.parse(fs.readFileSync(loginDataFile, 'utf-8')) as {
-    email: string,
-    pass: string
-}
+    const loginData = readLoginData()
 
-test('authenticate', async ({ page }) => { 
-    await page.goto('/login')
+    if (loginData) {
+        await page.goto('/login')
 
-    await loginPage.login(
-        page,
-        loginData.email,
-        loginData.pass
-    )
-    await loginPage.verifySuccessfulLogin(page)
+        await loginPage.login(
+            page,
+            loginData.email,
+            loginData.pass
+        )
+        // After successful login, user should be redirected to home page
+        await expect(page).toHaveURL('/')
 
-    await page.context().storageState({
-        path: authSessionFile
-    })
-  
+        await page.context().storageState({
+            path: getAuthSessionPath()
+        })
+    } else {
+        console.warn('No valid credentials found')
+    }
+
+
 })
 

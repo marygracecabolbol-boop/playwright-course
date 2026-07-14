@@ -19,3 +19,4 @@ export async function addConfirmationCode(page: Page, code: string) {
     await input.fill(code)
     await page.locator('[data-test-id="confirm-signup-submit-button"]').click();
 }
+

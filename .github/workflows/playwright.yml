@@ -2,7 +2,7 @@ name: Playwright test
 
 on:
   push:
-    branches: ["debug"]
+    branches: ["main"]
     
 
 jobs:

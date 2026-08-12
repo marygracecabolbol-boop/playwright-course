@@ -26,7 +26,7 @@ test.fail('Check for failed requests', async ({ page }) => {
             `failed request to ${request.url()} with error ${request.failure()?.errorText}`
         ).toBeUndefined()
     })
-    await page.goto('http://localhost:5000/Events.html')
+    await page.goto('http://localhost:3000/Events.html')
     const requestButton = page.getByRole('button', {
         name: 'Call wrong server'
     })

@@ -4,7 +4,7 @@ test.use({
     storageState: {
         cookies: [],
         origins: [{
-            origin: 'http://localhost:5000/',
+            origin: 'http://localhost:3000/',
             localStorage: [{
                 name: 'name',
                 value: 'Alex'
